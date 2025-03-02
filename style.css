@@ -5,13 +5,12 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
 }
 
 h1{
     text-decoration: underline;
     color: #2917c7;
-    margin-top: 0;
 }
 
 .gameContainer{

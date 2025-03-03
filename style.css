@@ -40,6 +40,10 @@ h1{
     background-color: #2917c7;
 }
 
+.score {
+    display: none;
+}
+
 .gameOver {
     display: none;
     justify-content: center;

@@ -3,81 +3,88 @@ const canvas = document.querySelector('canvas');
 const canvasContext = canvas.getContext('2d');
 
 const BLOCK_SIZE = 20;
-canvas.width = 15 * BLOCK_SIZE;
+canvas.width = 16 * BLOCK_SIZE;
 canvas.height = canvas.width * 2;
 canvasContext.scale(BLOCK_SIZE, BLOCK_SIZE);
 
-let board = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1]];
+let board = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1]];
 
 const divBoard = document.getElementById("board");
+const gameOver = document.getElementById("gameOverMsg");
+const showScore = document.getElementById("score");
+const scoreText = document.getElementById("scoreText");
+const startButton = document.getElementById("startButton");
+
 //console.log(board);
 
 // Create tetris pieces
 const SQUARE = {
-    position: {x: 0, y: 0},
+    position: {x: 7, y: 0},
     shape: [[1, 1],
             [1, 1]]}
 
 const LINE = {
-    position: {x: 10, y: 10},
+    position: {x: 6, y: 0},
     shape: [[1],
             [1],
             [1],
             [1]]}
 
 const EL_LEFT = {
-    position: {x: 10, y: 10},
+    position: {x: 6, y: 0},
     shape: [[0, 1],
             [0, 1],
             [1, 1]]}
 
 const EL_RIGHT = {
-    position: {x: 10, y: 10},
+    position: {x: 6, y: 0},
     shape: [[1, 0],
             [1, 0],
             [1, 1]]}
 
 const STEP = {
-    position: {x: 10, y: 10},
+    position: {x: 6, y: 0},
     shape: [[1, 1, 1],
             [0, 1, 0]]}
 
 const Z_RIGHT = {
-    position: {x: 10, y: 10},
+    position: {x: 6, y: 0},
     shape: [[0, 1, 1],
             [1, 1, 0]]}
 
 const Z_LEFT = {
-    position: {x: 10, y: 10},
+    position: {x: 6, y: 0},
     shape: [[1, 1, 0],
             [0, 1, 1]]}
 
@@ -90,7 +97,7 @@ const FPS = 60;
 const FRAME_TIME = 1000 / FPS;
 
 function update() {
-    setInterval(update, FRAME_TIME);
+    setTimeout(update, FRAME_TIME);
     draw();
 
 }
@@ -108,11 +115,13 @@ function draw() {
         })
     );
 
-    for (let y = 0; y <= PIECES[0].shape.length - 1; y++) {
-        PIECES[0].shape[y].forEach((el, x) => {
+    //let piece = createNewPiece();
+
+    for (let y = 0; y <= piece.shape.length - 1; y++) {
+        piece.shape[y].forEach((el, x) => {
             if (el === 1) {
                 canvasContext.fillStyle = "#4854fd";
-                canvasContext.fillRect(x + PIECES[0].position.x, y + PIECES[0].position.y, 1, 1);
+                canvasContext.fillRect(x + piece.position.x, y + piece.position.y, 1, 1);
             }
         });
     }
@@ -120,73 +129,97 @@ function draw() {
 
 // Piece movement
 document.addEventListener("keydown", event => {
-    if (event.key === "ArrowRight") PIECES[0].position.x++;
-    if (event.key === "ArrowLeft") PIECES[0].position.x--;
-    if (event.key === "ArrowDown") PIECES[0].position.y++;
-    if (event.key === "ArrowUp") PIECES[0].position.y--;
+    if (event.key === "ArrowRight") {
+        event.preventDefault();
+        piece.position.x++;
+    }
+    if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        piece.position.x--;
+    }
+    if (event.key === "ArrowDown") {
+        event.preventDefault();
+        piece.position.y++;
+    }
+    if (event.key === "ArrowUp") {
+        event.preventDefault();
+        piece.position.y--;
+    }
     colisionDetect();
     
 });
 
 // Detect colisions
 function colisionDetect() {
-    if (PIECES[0].position.x > (canvas.width / BLOCK_SIZE) - PIECES[0].shape[0].length) PIECES[0].position.x--;
-    if (PIECES[0].position.x < 0) PIECES[0].position.x++;
-    if (PIECES[0].position.y > (canvas.height / BLOCK_SIZE) - PIECES[0].shape.length) {
-        PIECES[0].position.y--;
-        //fixPiece();
+    if (piece.position.x > (canvas.width / BLOCK_SIZE) - piece.shape[0].length) piece.position.x--;
+    if (piece.position.x < 0) piece.position.x++;
+    if (piece.position.y > (canvas.height / BLOCK_SIZE) - piece.shape.length) {
+        piece.position.y--;
+        fixPiece();
     }
 
     let col = false;
-    let row = board[PIECES[0].position.y + PIECES[0].shape.length - 1];
+    let row = board[piece.position.y + piece.shape.length - 1];
 
-    PIECES[0].shape[PIECES[0].shape.length - 1].forEach((el, x) => {
-        if (row[PIECES[0].position.x + x] === 1 && el === 1) {
+    piece.shape[piece.shape.length - 1].forEach((el, x) => {
+        if (row[piece.position.x + x] === 1 && el === 1) {
             col = true;
         }
     });
     if (col) {
-        PIECES[0].position.y--;
-        //fixPiece();
+        piece.position.y--;
+        fixPiece();
     }
 
-    /*if (board[PIECES[0].position.y + PIECES[0].shape.length - 1][PIECES[0].position.x] === 1) {
-        PIECES[0].position.y--;
+    /*if (board[piece.position.y + piece.shape.length - 1][piece.position.x] === 1) {
+        piece.position.y--;
         //fixPiece();
     }*/
 }
 
 function fixPiece() {
-
+    piece.shape.forEach((row, y)=> 
+        row.forEach((el, x) => {
+            if (el === 1) {
+                board[piece.position.y + y][piece.position.x + x] = 1;
+            }
+        })
+    );
+    destroyRow();
+    piece = createNewPiece();
 }
 
-console.log(PIECES[0].position.y);
-console.log();
+function createNewPiece() {
+    let randomPiece = Math.floor(Math.random() * 7);
+    let piece = Object.create(PIECES[randomPiece]);
+    piece.position.y = 0;
+    piece.position.x = 7;
 
-update();
+    return piece;
+}
+
+function destroyRow() {
+    board.forEach((row, y) => {
+        let aux = row.filter(el => el === 0);
+        if (aux.length === 0) {
+            board.splice(y, 1);
+            board.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+            score += 100;
+            scoreText.textContent = `Score: ${score}`;
+        }
+    });
+}
+
+let piece;
+let score;
 
 function startGame() {
-    drawPiece();
+    startButton.style.display = "none"
+    gameOver.style.display = "none";
+    scoreText.style.display = "block";
+    
+    score = 0;
+    piece = createNewPiece();
+    update();
 }
 
-function drawPiece() {
-    let randomPiece = Math.floor(Math.random() * 7);
-    let newPiece = document.createElement("canvas");
-    divBoard.append(newPiece);
-
-    let pieceContext = newPiece.getContext('2d');
-
-    newPiece.width = PIECES[randomPiece].shape[0].length * BLOCK_SIZE;
-    newPiece.height = PIECES[randomPiece].shape.length * BLOCK_SIZE;
-    pieceContext.scale(BLOCK_SIZE, BLOCK_SIZE);
-
-    pieceContext.fillStyle = "#00f";
-
-    for (let y = 0; y <= PIECES[randomPiece].shape.length - 1; y++) {
-        PIECES[randomPiece].shape[y].forEach((el, x) => {
-            if (el === 1) {
-                pieceContext.fillRect(x, y, 1, 1);
-            }
-        });
-    }
-}

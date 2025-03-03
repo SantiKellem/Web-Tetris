@@ -108,11 +108,11 @@ function draw() {
         })
     );
 
-    for (let y = 0; y <= PIECES[6].shape.length - 1; y++) {
-        PIECES[6].shape[y].forEach((el, x) => {
+    for (let y = 0; y <= PIECES[0].shape.length - 1; y++) {
+        PIECES[0].shape[y].forEach((el, x) => {
             if (el === 1) {
                 canvasContext.fillStyle = "#4854fd";
-                canvasContext.fillRect(x + PIECES[6].position.x, y + PIECES[6].position.y, 1, 1);
+                canvasContext.fillRect(x + PIECES[0].position.x, y + PIECES[0].position.y, 1, 1);
             }
         });
     }
@@ -120,40 +120,40 @@ function draw() {
 
 // Piece movement
 document.addEventListener("keydown", event => {
-    if (event.key === "ArrowRight") PIECES[6].position.x++;
-    if (event.key === "ArrowLeft") PIECES[6].position.x--;
-    if (event.key === "ArrowDown") PIECES[6].position.y++;
-    if (event.key === "ArrowUp") PIECES[6].position.y--;
+    if (event.key === "ArrowRight") PIECES[0].position.x++;
+    if (event.key === "ArrowLeft") PIECES[0].position.x--;
+    if (event.key === "ArrowDown") PIECES[0].position.y++;
+    if (event.key === "ArrowUp") PIECES[0].position.y--;
     colisionDetect();
     
 });
 
 // Detect colisions
 function colisionDetect() {
-    if (PIECES[6].position.x > (canvas.width / BLOCK_SIZE) - PIECES[6].shape[0].length) PIECES[6].position.x--;
-    if (PIECES[6].position.x < 0) PIECES[6].position.x++;
-    if (PIECES[6].position.y > (canvas.height / BLOCK_SIZE) - PIECES[6].shape.length) {
-        PIECES[6].position.y--;
+    if (PIECES[0].position.x > (canvas.width / BLOCK_SIZE) - PIECES[0].shape[0].length) PIECES[0].position.x--;
+    if (PIECES[0].position.x < 0) PIECES[0].position.x++;
+    if (PIECES[0].position.y > (canvas.height / BLOCK_SIZE) - PIECES[0].shape.length) {
+        PIECES[0].position.y--;
         //fixPiece();
     }
 
-    /*let col = false;
-    let row = board[PIECES[6].position.y + 1];
+    let col = false;
+    let row = board[PIECES[0].position.y + PIECES[0].shape.length - 1];
 
-    PIECES[6].shape[PIECES[6].shape.length - 1].forEach((el, x) => {
-        if (row[PIECES[6].position.x + x] === el) {
+    PIECES[0].shape[PIECES[0].shape.length - 1].forEach((el, x) => {
+        if (row[PIECES[0].position.x + x] === 1 && el === 1) {
             col = true;
         }
     });
     if (col) {
-        PIECES[6].position.y--;
-        //fixPiece();
-    }*/
-
-    if (board[PIECES[6].position.y + 1][PIECES[6].position.x] === 1) {
-        PIECES[6].position.y--;
+        PIECES[0].position.y--;
         //fixPiece();
     }
+
+    /*if (board[PIECES[0].position.y + PIECES[0].shape.length - 1][PIECES[0].position.x] === 1) {
+        PIECES[0].position.y--;
+        //fixPiece();
+    }*/
 }
 
 function fixPiece() {

@@ -1,5 +1,7 @@
 // Initalize canvas and its dimensions
 const canvas = document.querySelector('canvas');
+canvas.style.display = "none";
+
 const canvasContext = canvas.getContext('2d');
 
 const BLOCK_SIZE = 20;
@@ -7,6 +9,7 @@ canvas.width = 16 * BLOCK_SIZE;
 canvas.height = canvas.width * 2;
 canvasContext.scale(BLOCK_SIZE, BLOCK_SIZE);
 
+// Declare board
 let board = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,16 +40,16 @@ let board = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1]];
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
 
+// Declare all const HTML elements
 const divBoard = document.getElementById("board");
-const gameOver = document.getElementById("gameOverMsg");
+const gameOverMsg = document.getElementById("gameOverMsg");
 const showScore = document.getElementById("score");
 const scoreText = document.getElementById("scoreText");
 const startButton = document.getElementById("startButton");
 
-//console.log(board);
 
 // Create tetris pieces
 const SQUARE = {
@@ -102,6 +105,7 @@ function update() {
 
 }
 
+// Draw function
 function draw() {
     canvasContext.fillStyle = "#000";
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
@@ -114,8 +118,6 @@ function draw() {
             }
         })
     );
-
-    //let piece = createNewPiece();
 
     for (let y = 0; y <= piece.shape.length - 1; y++) {
         piece.shape[y].forEach((el, x) => {
@@ -149,7 +151,7 @@ document.addEventListener("keydown", event => {
     
 });
 
-// Detect colisions
+// Collision Detector
 function colisionDetect() {
     if (piece.position.x > (canvas.width / BLOCK_SIZE) - piece.shape[0].length) piece.position.x--;
     if (piece.position.x < 0) piece.position.x++;
@@ -186,7 +188,13 @@ function fixPiece() {
         })
     );
     destroyRow();
-    piece = createNewPiece();
+    if (gameOver()) {
+        gameOverMsg.style.display = "flex";
+        startButton.style.display = "block";
+    }
+    else {
+        piece = createNewPiece();
+    }
 }
 
 function createNewPiece() {
@@ -210,15 +218,30 @@ function destroyRow() {
     });
 }
 
+function gameOver() {
+    let firstRow = board[0].filter(el => el === 1);
+    return firstRow.length > 0;
+}
+
+function cleanBoard() {
+    for (let y = 0; y <= board.length - 1; y++) {
+        for (let x = 0; x <= board[y].length - 1; x++) {
+            board[y][x] = 0;
+        }
+    }
+}
+
 let piece;
 let score;
 
 function startGame() {
+    canvas.style.display = "block";
+    cleanBoard();
     startButton.style.display = "none"
-    gameOver.style.display = "none";
-    scoreText.style.display = "block";
+    gameOverMsg.style.display = "none";
     
     score = 0;
+    scoreText.textContent = `Score: ${score}`;
     piece = createNewPiece();
     update();
 }

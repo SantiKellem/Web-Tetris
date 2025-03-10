@@ -94,10 +94,10 @@ const Z_LEFT = {
 const PIECES = [SQUARE, LINE, EL_LEFT, EL_RIGHT, STEP, Z_RIGHT, Z_LEFT];
 
 
-let intervalDrops = 1000;
-let lastDrop = 0;
-let level = 0;
-let lastIntervalChangeLevel = 0;
+let intervalDrops;
+let lastDrop;
+let level;
+let lastIntervalChangeLevel;
 
 // Game Loop
 function update() {
@@ -112,7 +112,7 @@ function update() {
     if (currentTime - lastDrop > intervalDrops) {
         lastDrop = currentTime;
         piece.position.y++;
-        collisionDetect();
+        collisionDetect("ArrowDown");
     }
     draw();
     requestAnimationFrame(update);
@@ -148,24 +148,26 @@ document.addEventListener("keydown", event => {
     switch (event.key) {
         case "ArrowRight":
             piece.position.x++;
+            collisionDetect(event.key);
             break;
         case "ArrowLeft":
             piece.position.x--;
+            collisionDetect(event.key);
             break;
         case "ArrowDown":
             piece.position.y++;
+            collisionDetect(event.key);
             break;
         case "ArrowUp":
             rotatePiece();
+            collisionDetect(event.key);
             break;
         default:
             break;
-    }
-    collisionDetect();
-    
+    }    
 });
 
-// Piece Rotation
+// Piece Clockwise Rotation
 function rotatePiece() {
     let newShape = [];
 
@@ -186,39 +188,58 @@ function rotatePiece() {
         newShape[i].reverse();
     }
 
+    let oldShape = piece.shape;
     piece.shape = newShape;
+    if (collisionDetect()) {
+        piece.shape = oldShape;
+    }
 }
 
 // Collision Detector
-function collisionDetect() {
-    if (piece.position.x > (canvas.width / BLOCK_SIZE) - piece.shape[0].length) piece.position.x--;
-    if (piece.position.x < 0) piece.position.x++;
+function collisionDetect(arrowPressed) {
+    let col;
+
+    if (piece.position.x > (canvas.width / BLOCK_SIZE) - piece.shape[0].length) {
+        piece.position.x--; 
+        col = true;
+        return col;
+    }
+    if (piece.position.x < 0) {
+        piece.position.x++;
+        col = true;
+        return col;
+    }
     if (piece.position.y > (canvas.height / BLOCK_SIZE) - piece.shape.length) {
         piece.position.y--;
+        col = true
         fixPiece();
+        return col;
     }
+    
+    col = false;
 
-    let col = false;
-    let row = board[piece.position.y + piece.shape.length - 1];
-
-    piece.shape[piece.shape.length - 1].forEach((el, x) => {
-        if (row[piece.position.x + x] === 1 && el === 1) {
-            col = true;
+    for (let y = 0; y <= piece.shape.length - 1; y++) {
+        for (let x = 0; x <= piece.shape[y].length - 1; x++) {
+            if (piece.shape[y][x] === 1 && board[piece.position.y + y]?.[piece.position.x + x] === 1) {
+                col = true;
+            }
         }
-    });
+    }
+
     if (col) {
+        if (arrowPressed === "ArrowRight") piece.position.x--;
+        else if (arrowPressed === "ArrowLeft") piece.position.x++;
+        else if (arrowPressed === "ArrowDown") {
         piece.position.y--;
         fixPiece();
     }
+    }
 
-    // IDEA --> for each x position until finishing the piece 
-
-    /*if (board[piece.position.y + piece.shape.length - 1][piece.position.x] === 1) {
-        piece.position.y--;
-        //fixPiece();
-    }*/
+    return col;
 }
 
+
+// Stick each piece on the board
 function fixPiece() {
     piece.shape.forEach((row, y)=> 
         row.forEach((el, x) => {
@@ -238,8 +259,10 @@ function fixPiece() {
     }
 }
 
+
+// Create a new piece for the player
 function createNewPiece() {
-    let randomPiece = Math.floor(Math.random() * 7);
+    let randomPiece = Math.floor(Math.random() * PIECES.length);
     let piece = Object.create(PIECES[randomPiece]);
     piece.position.y = 0;
     piece.position.x = 7;
@@ -247,6 +270,8 @@ function createNewPiece() {
     return piece;
 }
 
+
+// Destroy rows once they are filled
 function destroyRow() {
     board.forEach((row, y) => {
         let aux = row.filter(el => el === 0);
@@ -259,11 +284,15 @@ function destroyRow() {
     });
 }
 
+
+// Checks if the player has lost
 function gameOver() {
     let firstRow = board[0].filter(el => el === 1);
     return firstRow.length > 0;
 }
 
+
+// Clears the board to start the game
 function cleanBoard() {
     for (let y = 0; y <= board.length - 1; y++) {
         for (let x = 0; x <= board[y].length - 1; x++) {
@@ -280,6 +309,11 @@ function startGame() {
     cleanBoard();
     startButton.style.display = "none"
     gameOverMsg.style.display = "none";
+
+    intervalDrops = 1000;
+    lastDrop = 0;
+    level = 0;
+    lastIntervalChangeLevel = 0;
     
     score = 0;
     scoreText.textContent = `Score: ${score}`;
